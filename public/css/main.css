@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@600&family=Poppins:wght@300&display=swap');
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.hidden-arrow.dropdown-toggle:after {
+    display:none
+}
+
+.mask {
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    width:100%;
+    height: 300px;
+    overflow:hidden;
+    border-radius: 5px 5px 0px 0px;
+    background-attachment:fixed
+}
+
+
+.upload-btn-wrapper{
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.upload-file{
+    border: 1px dashed #BABABA;
+    border-radius: 5px;
+    height: 100px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.upload-btn-wrapper input[type=file]{
+    width:100%;
+    position: absolute;
+    left:0;
+    right:0;
+    top:0;
+    opacity: 0;
+    cursor: pointer;
+    min-height: 300px;
+}
+
+.btn .upload-file{
+    font-size:13px;
+}
+.upload-btn{
+    justify-content: center;
+    align-items: center;
+    display: block;
+    color:#777777;
+}

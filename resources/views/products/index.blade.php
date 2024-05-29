@@ -47,10 +47,29 @@
                                 <td>
                                     <div class="d-flex d-inline">
                                         <a href="{{url('/product/edit',$p->id)}}"><i class="bi-pencil-square m-2"></i></a>
-                                        <a href="{{url('/product/delete', $p->id)}}"><i class="bi-trash m-2" style="color: red"></i></a>
+                                        <a href="#" class="text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{$p->id}}"><i class="bi-trash m-2"></i></a>
                                     </div>
                                 </td>
                             </tr>
+                            
+                            <!-- Modal -->
+                            <div class="modal fade" id="confirmDeleteModal{{$p->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Konfirmasi Penghapusan</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Apakah Anda yakin ingin menghapus produk ini?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                            <a href="{{url('/product/delete', $p->id)}}" class="btn btn-danger">Hapus</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @endforeach
                     </table>
                 </div>

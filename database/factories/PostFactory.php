@@ -27,7 +27,7 @@ class PostFactory extends Factory
             'user_id' => mt_rand(1,2),
             'lab_id' => mt_rand(1,3),
             'jenjang_id' => mt_rand(1,3),
-            'poster' => 'public/img/cover-poster/cover-poster/posterskripsi.jpg'
+            'poster' => 'cover-poster/posterskripsi.jpg'
         ];
     }
 }

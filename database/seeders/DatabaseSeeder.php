@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
             'dosenFirstName' => 'Marguerite',
             'dosenLastName' => 'Jaskolski',
             'url' => 'https://bayer.net/perspiciatis-atque-sint-magnam-quia-ut.html',
-            'poster' => 'public/img/cover-poster/posterskripsi.jpg',
+            'poster' => 'cover-poster/posterskripsi.jpg',
             'slug' => 'astral-express', 
             'user_id' => 1,
             'published_at' => '2050-09-11',

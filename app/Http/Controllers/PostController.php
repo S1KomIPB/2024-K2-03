@@ -65,9 +65,9 @@ class PostController extends Controller
 
         $validatedData['published_at'] = $request->input('published_at', 'stripes');
         
-        $validatedData['poster'] = $request->file('poster')->store('cover-poster');
+        $validatedData['poster'] = substr($request->file('poster')->store('public/cover-poster'), 7);
 
-        $validatedData['pdf'] = $request->file('pdf')->store('thesis-files');
+        $validatedData['pdf'] = substr($request->file('pdf')->store('public/thesis-files'), 7);
         
         $validatedData['user_id'] = auth()->user()->id;
 

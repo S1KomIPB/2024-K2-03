@@ -50,19 +50,43 @@
                     <div class="col lg-6">
 
                         <!-- Nama Dospem -->
-                        <label for="inputDospem" class="form-label fw-bold" style="color: #002147"> Advisors </label>
+                        <!-- <label for="inputDospem" class="form-label fw-bold" style="color: #002147"> Advisors </label>
                         <div class="row">
-                            <!-- Nama Depan -->
+
                             <div class="col">
                                 <input type="text" class="form-control mb-3" id="dosenFirstName" name="dosenFirstName" placeholder="First Name" value="{{ $product->dosenFirstName }}">
                             </div>
-                            <!-- Nama Belakang -->
+
                             <div class="col">
                                 <input type="text" class="form-control mb-3" id="dosenLastName" name="dosenLastName" placeholder="Last Name" value="{{ $product->dosenLastName }}">
                             </div>
+                        </div> -->
+
+
+                        <!-- TODO: Pada kodingan dibawah, dosen yang ditampilkan di loop menggunakan foreach, sesuaikanlah bagian dalam @foreach ($product->advisors as $index => $advisor) dengan database yang baru, javascript untuk id sudah ditambahkan pada bagian paling bawah -->
+                        <!-- Nama Dospem -->
+                        <label for="inputDospem" class="form-label fw-bold" style="color: #002147">Advisors</label>
+                        <div id="advisorInputs">
+                            <!-- Menampilkan dosen yang sudah ada -->
+                            @if ($product->advisors)
+                                @foreach ($product->advisors as $index => $advisor)
+                                    <div class="row advisor-row">
+                                        <div class="col">
+                                            <input type="text" class="form-control mb-3" id="dosenFirstName{{ $index+1 }}" name="dosenFirstName[]" placeholder="First Name" value="{{ $advisor->firstName }}">
+                                        </div>
+                                        <div class="col">
+                                            <input type="text" class="form-control mb-3" id="dosenLastName{{ $index+1 }}" name="dosenLastName[]" placeholder="Last Name" value="{{ $advisor->lastName }}">
+                                        </div>
+                                    </div>
+                                @endforeach
+                            @endif
                         </div>
+                        <button type="button" class="btn btn-primary" id="addAdvisorButton">Add Another Advisor</button>
+
 
                         <!-- Lab Keilmuan -->
+                        </br>
+                        </br>
                         <label for="inputLab" class="form-label fw-bold" style="color: #002147"> Research Division </label>
                         <div style="color: #002147">
                             @foreach ($labs as $lab)
@@ -161,6 +185,23 @@
         fetch('/checkSlug?title=' + title.value)
         .then(response => response.json())
         .then(data => slug.value = data.slug)
+    });
+
+    document.getElementById('addAdvisorButton').addEventListener('click', function() {
+    var totalAdvisors = document.querySelectorAll('.advisor-row').length;
+    if (totalAdvisors < 3) {
+        var newAdvisorNumber = totalAdvisors + 1;
+        var newAdvisorHTML = `
+            <div class="row advisor-row">
+                <div class="col">
+                    <input type="text" class="form-control mb-3" id="dosenFirstName` + newAdvisorNumber + `" name="dosenFirstName[]" placeholder="First Name">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control mb-3" id="dosenLastName` + newAdvisorNumber + `" name="dosenLastName[]" placeholder="Last Name">
+                </div>
+            </div>`;
+        document.getElementById('advisorInputs').insertAdjacentHTML('beforeend', newAdvisorHTML);
+        }
     });
     </script>
 

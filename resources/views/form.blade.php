@@ -49,20 +49,37 @@
 
             <div class="col lg-6">
 
+            <label for="inputDospem" class="form-label fw-bold" style="color: #002147">Advisors</label>
+
                 <!-- Nama Dospem -->
-                <label for="inputDospem" class="form-label fw-bold" style="color: #002147"> Advisors </label>
+                <!-- <label for="inputDospem" class="form-label fw-bold" style="color: #002147"> Advisors </label>
                 <div class="row">
-                    <!-- Nama Depan -->
+
                     <div class="col">
                         <input type="text" class="form-control mb-3" id="dosenFirstName" name="dosenFirstName" placeholder="First Name" value="{{ old('dosenFirstName') }}">
                     </div>
-                    <!-- Nama Belakang -->
+
                     <div class="col">
                         <input type="text" class="form-control mb-3" id="dosenLastName" name="dosenLastName" placeholder="Last Name" value="{{ old('dosenLastName') }}">
                     </div>
+                </div> -->
+
+                <!-- TODO: bagian di bawah ini merupakan input dosen yang dapat ditambahkan, sesuaikan id dari dosen dengan database jika terjadi penambahan dosen, javascript untuk otomatisasi penambahan nomor pada id dosen sudah ada di bagian bawah -->
+                <div id="advisorInputs">
+                    <div class="row">
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" id="dosenFirstName1" name="dosenFirstName[]" placeholder="First Name" value="{{ old('dosenFirstName1') }}">
+                        </div>
+                        <div class="col">
+                            <input type="text" class="form-control mb-3" id="dosenLastName1" name="dosenLastName[]" placeholder="Last Name" value="{{ old('dosenLastName1') }}">
+                        </div>
+                    </div>
                 </div>
+                <button type="button" class="btn btn-primary" id="addAdvisorButton">Add Another Advisor</button>
 
                 <!-- Lab Keilmuan -->
+                </br>
+                </br>
                 <label for="inputLab" class="form-label fw-bold" style="color: #002147"> Research Division </label>
                 <div style="color: #002147">
                     @foreach ($labs as $lab)
@@ -161,6 +178,26 @@
         .then(response => response.json())
         .then(data => slug.value = data.slug)
     });
+
+    document.getElementById('addAdvisorButton').addEventListener('click', function() {
+    var totalAdvisors = document.querySelectorAll('.advisor-row').length;
+    if (totalAdvisors < 2) {
+        var newAdvisorNumber = totalAdvisors + 1;
+        var newAdvisorHTML = `
+            <div class="row advisor-row">
+                <div class="col">
+                    <input type="text" class="form-control mb-3" id="dosenFirstName` + newAdvisorNumber + `" name="dosenFirstName[]" placeholder="First Name">
+                </div>
+                <div class="col">
+                    <input type="text" class="form-control mb-3" id="dosenLastName` + newAdvisorNumber + `" name="dosenLastName[]" placeholder="Last Name">
+                </div>
+            </div>`;
+        document.getElementById('advisorInputs').insertAdjacentHTML('beforeend', newAdvisorHTML);
+        }
+    });
+
+
+
     </script>
 
 @endsection

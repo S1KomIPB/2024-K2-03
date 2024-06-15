@@ -63,7 +63,6 @@
                         </div> -->
 
 
-                        <!-- TODO: Pada kodingan dibawah, dosen yang ditampilkan di loop menggunakan foreach, sesuaikanlah bagian dalam @foreach ($product->advisors as $index => $advisor) dengan database yang baru, javascript untuk id sudah ditambahkan pada bagian paling bawah -->
                         <!-- Nama Dospem -->
                         <label for="inputDospem" class="form-label fw-bold" style="color: #002147">Advisors</label>
                         <div id="advisorInputs">

@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Advisor;
 use App\Models\Post;
 use App\Models\Lab;
 use App\Models\Jenjang;
 use App\Models\User;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Psy\CodeCleaner\IssetPass;
 
 
 class PostController extends Controller
@@ -54,12 +56,17 @@ class PostController extends Controller
             'slug' => 'required',
             'lab_id' => 'required',
             'jenjang_id' => 'required',
-            'dosenFirstName' => 'required',
-            'dosenLastName' => 'required',
+            'dosenFirstName' => 'required|array:0,1,2',
+            'dosenLastName' => 'required|array:0,1,2',
             'abstract' => 'required',
             'poster' => 'image|file|max:6000',
             'pdf' => 'file|mimes:pdf'
         ]);
+
+        if (count($validatedData['dosenFirstName']) !== count($validatedData['dosenLastName']))
+        {
+            return redirect()->back()->with('error', "Please fill the advisor's first name and last name");
+        }
 
         $validatedData['url'] = $request->input('url', ''); 
 
@@ -71,8 +78,25 @@ class PostController extends Controller
         
         $validatedData['user_id'] = auth()->user()->id;
 
+        $advisors = [];
+        for ($i = 0; $i < 3 && $i < count($validatedData['dosenFirstName']); $i++)
+        {
+            dump($validatedData['dosenFirstName'][$i]);
+            $advisors[$i] = Advisor::firstOrCreate([
+                'firstName' => $validatedData['dosenFirstName'][$i],
+                'lastName' => $validatedData['dosenLastName'][$i]
+            ]);
+        }
+
+        unset($validatedData['dosenFirstName'], $validatedData['dosenLastName']);
+
         // Store the post in the database
         $post = Post::create($validatedData);
+        
+        foreach ($advisors as $advisor)
+        {
+            $post->advisors()->attach($advisor);
+        }
 
         // Redirect to the post's page with a success message
         return redirect('/post/' . $post->slug)->with('success', 'Your Product Has Been Added');

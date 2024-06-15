@@ -51,20 +51,7 @@
 
             <label for="inputDospem" class="form-label fw-bold" style="color: #002147">Advisors</label>
 
-                <!-- Nama Dospem -->
-                <!-- <label for="inputDospem" class="form-label fw-bold" style="color: #002147"> Advisors </label>
-                <div class="row">
-
-                    <div class="col">
-                        <input type="text" class="form-control mb-3" id="dosenFirstName" name="dosenFirstName" placeholder="First Name" value="{{ old('dosenFirstName') }}">
-                    </div>
-
-                    <div class="col">
-                        <input type="text" class="form-control mb-3" id="dosenLastName" name="dosenLastName" placeholder="Last Name" value="{{ old('dosenLastName') }}">
-                    </div>
-                </div> -->
-
-                <!-- TODO: bagian di bawah ini merupakan input dosen yang dapat ditambahkan, sesuaikan id dari dosen dengan database jika terjadi penambahan dosen, javascript untuk otomatisasi penambahan nomor pada id dosen sudah ada di bagian bawah -->
+                <!-- TODO: bagusin yang old() itu -->
                 <div id="advisorInputs">
                     <div class="row">
                         <div class="col">

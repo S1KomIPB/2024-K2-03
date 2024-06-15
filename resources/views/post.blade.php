@@ -43,15 +43,12 @@
 
 
                 <!-- Author -->
-                 <!-- TODO: Pada kodingan dibawah, dosen yang ditampilkan di loop menggunakan foreach, sesuaikanlah bagian dalam loop <p>{{ $advisor->lastName }}, {{ $advisor->firstName }}<br></p> dengan database -->
                 <h6 class="fw-bold mt-3">Author</h6>
                 <p>{{$product->user->lastName}}, {{$product->user->firstName}} <br>
                     @foreach ($product->advisors as $advisor)
-                        <p>{{ $advisor->lastName }}, {{ $advisor->firstName }}<br></p>
+                        {{ $advisor->lastName }}, {{ $advisor->firstName }}<br>
                     @endforeach
                 </p>
-                    
-                    <!-- {{$product->dosenLastName}}, {{$product->dosenFirstName}} </p> -->
 
                 <!-- Tanggal Terbit -->
                 <h6 class="fw-bold">Date of Issue</h6>

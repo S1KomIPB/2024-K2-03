@@ -16,8 +16,8 @@ return new class extends Migration
             $table->foreignId('lab_id');
             $table->foreignId('jenjang_id');
             $table->foreignId('user_id');
-            $table->string('dosenFirstName');
-            $table->string('dosenLastName');
+            // $table->string('dosenFirstName');
+            // $table->string('dosenLastName');
             $table->string('url')->default('')->nullable;
             $table->string('title');
             $table->string('slug')->unique();

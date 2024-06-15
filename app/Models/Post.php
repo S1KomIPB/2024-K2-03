@@ -78,6 +78,11 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    public function advisors()
+    {
+        return $this->belongsToMany(Advisor::class, 'advisor_post');
+    }
+
     public function getRouteKeyName()
     {
         return 'slug';

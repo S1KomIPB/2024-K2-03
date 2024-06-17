@@ -51,16 +51,22 @@
 
             <label for="inputDospem" class="form-label fw-bold" style="color: #002147">Advisors</label>
 
-                <!-- TODO: bagusin yang old() itu -->
+                <!-- TODO: old nya ga work untuk semua, catatan revert : hapus @php & @for, ganti .$i jadi 1 -->
                 <div id="advisorInputs">
+                    @php
+                    $advisorCount = old('dosenFirstName') ? count(old('dosenFirstName')) : 1; // Default to 1 if no old input
+                    @endphp
+
+                    @for ($i = 0; $i < $advisorCount; $i++)
                     <div class="row">
                         <div class="col">
-                            <input type="text" class="form-control mb-3" id="dosenFirstName1" name="dosenFirstName[]" placeholder="First Name" value="{{ old('dosenFirstName1') }}">
+                            <input type="text" class="form-control mb-3" id="dosenFirstName1" name="dosenFirstName[]" placeholder="First Name" value="{{ old('dosenFirstName.$i') }}">
                         </div>
                         <div class="col">
-                            <input type="text" class="form-control mb-3" id="dosenLastName1" name="dosenLastName[]" placeholder="Last Name" value="{{ old('dosenLastName1') }}">
+                            <input type="text" class="form-control mb-3" id="dosenLastName1" name="dosenLastName[]" placeholder="Last Name" value="{{ old('dosenLastName.$1') }}">
                         </div>
                     </div>
+                    @endfor
                 </div>
                 <button type="button" class="btn btn-primary" id="addAdvisorButton">Add Another Advisor</button>
 

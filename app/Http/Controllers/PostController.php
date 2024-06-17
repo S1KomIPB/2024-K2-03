@@ -141,19 +141,38 @@ class PostController extends Controller
             $request->pdf =  $product->pdf;
         }
 
-        $rules =[
+        $validatedData = $request->validate([
             'title' => 'required|max:255',
             'published_at' => 'required',
+            'url' => 'required',
             'lab_id' => 'required',
             'jenjang_id' => 'required',
-            'dosenFirstName' => 'required',
-            'dosenLastName' => 'required',
+            'dosenFirstName' => 'required|array',
+            'dosenLastName' => 'required|array',
             'abstract' => 'required'
-        ];
+        ]);
 
-        $validatedata = $request->validate($rules);
+        $product->update($validatedData);
 
-        $product->where('id', $product->id)->update($validatedata);
+        $currentAdvisors = $product->advisors;
+        $newAdvisorIds = [];
+
+        for ($i = 0; $i < count($request->dosenFirstName); $i++) {
+            $firstName = $request->dosenFirstName[$i];
+            $lastName = $request->dosenLastName[$i];
+    
+            $advisor = Advisor::firstOrCreate(
+                ['firstName' => $firstName, 'lastName' => $lastName]
+            );
+    
+            $newAdvisorIds[] = $advisor->id;
+        }
+
+        $product->advisors()->sync($newAdvisorIds);
+
+        // unset($validatedata['dosenFirstName'], $validatedata['dosenLastName']);
+
+        // $product->where('id', $product->id)->update($validatedData);
 
         return redirect('/products');
 

@@ -9,6 +9,7 @@ use App\Models\Jenjang;
 use App\Models\User;
 use Illuminate\Http\Request;
 use \Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\MessageBag;
 use Psy\CodeCleaner\IssetPass;
 
 
@@ -59,16 +60,18 @@ class PostController extends Controller
             'dosenFirstName' => 'required|array:0,1,2',
             'dosenLastName' => 'required|array:0,1,2',
             'abstract' => 'required',
-            'poster' => 'image|file|max:6000',
-            'pdf' => 'file|mimes:pdf'
+            'poster' => 'required|image|file|max:6000',
+            'pdf' => 'required|file|mimes:pdf'
         ]);
 
-        if (count($validatedData['dosenFirstName']) !== count($validatedData['dosenLastName']))
+        for ($i = 0; $i < 3 && $i < count($validatedData['dosenFirstName']); $i++)
         {
-            return redirect()->back()->with('error', "Please fill the advisor's first name and last name");
+            if (is_null($validatedData['dosenFirstName'][$i]) || is_null($validatedData['dosenLastName'][$i])) {
+                return redirect()->back()->withErrors(['dosenName' => "Please fill the advisor's first name and last name"])->withInput();
+            }
         }
 
-        $validatedData['url'] = $request->input('url', ''); 
+        $validatedData['url'] = $request->input('url', '');
 
         $validatedData['published_at'] = $request->input('published_at', 'stripes');
         
@@ -81,11 +84,13 @@ class PostController extends Controller
         $advisors = [];
         for ($i = 0; $i < 3 && $i < count($validatedData['dosenFirstName']); $i++)
         {
-            dump($validatedData['dosenFirstName'][$i]);
-            $advisors[$i] = Advisor::firstOrCreate([
-                'firstName' => $validatedData['dosenFirstName'][$i],
-                'lastName' => $validatedData['dosenLastName'][$i]
-            ]);
+            if (!is_null($validatedData['dosenFirstName'][$i]) && !is_null($validatedData['dosenLastName'][$i]))
+            {
+                $advisors[$i] = Advisor::firstOrCreate([
+                    'firstName' => $validatedData['dosenFirstName'][$i],
+                    'lastName' => $validatedData['dosenLastName'][$i]
+                ]);
+            }
         }
 
         unset($validatedData['dosenFirstName'], $validatedData['dosenLastName']);
